@@ -1,14 +1,14 @@
-export const INCREMENT_ACTION = "INCREMENT";
+export const CONTACT_FILTER = "CONTACT_FILTER";
 
-interface IncrementAction {
-  type: typeof INCREMENT_ACTION;
+interface ContactFilterAction {
+  type: typeof CONTACT_FILTER;
   payload: {
-    id: string | number;
+    str: string;
   };
 }
 
-export function IncrementActionCreator(id: string | number) {
-  return { type: INCREMENT_ACTION, payload: { id } };
+export function contactFilterActionCreator(str: string): ContactFilterAction {
+  return { type: CONTACT_FILTER, payload: { str: str } };
 }
 
-export type ActionTypes = IncrementAction;
+export type ContactActionTypes = ContactFilterAction;

@@ -1,10 +1,8 @@
-import { createStore } from "redux";
-import { combineReducers } from "redux";
-import { counterReducer } from "./reducer";
-import { composeWithDevTools } from "@redux-devtools/extension";
+import { createStore, combineReducers } from "redux";
+import { contactsReducer } from "./contactsReducer";
 
 const rootReducer = combineReducers({
-  counter: counterReducer
+  contacts: contactsReducer
 });
 
 export const store = createStore(rootReducer);
