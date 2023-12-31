@@ -1,22 +1,15 @@
-import React, {memo} from 'react';
-import {Card} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
-import {GroupContactsDto} from 'src/types/dto/GroupContactsDto';
+import React, { memo } from "react";
+import { Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { GroupContactsDto } from "src/types/dto/GroupContactsDto";
 
 interface GroupContactsCardProps {
-  groupContacts: GroupContactsDto,
-  withLink?: boolean
+  group: GroupContactsDto;
+  withLink?: boolean;
 }
 
-export const GroupContactsCard = memo<GroupContactsCardProps>(({
-    groupContacts: {
-      id,
-      name,
-      description,
-      photo,
-      contactIds
-    }, withLink
-  }) => {
+export const GroupContactsCard = memo<GroupContactsCardProps>(
+  ({ group: { id, name, description, photo, contactIds }, withLink }) => {
     return (
       <Card key={id}>
         <Card.Header>
@@ -28,4 +21,4 @@ export const GroupContactsCard = memo<GroupContactsCardProps>(({
       </Card>
     );
   }
-)
+);
