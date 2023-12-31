@@ -1,5 +1,4 @@
-import React, { memo, useEffect } from "react";
-import { CommonPageProps } from "./types";
+import { memo } from "react";
 import { Col, Row } from "react-bootstrap";
 import { ContactCard } from "src/components/ContactCard";
 import { FilterForm, FilterFormValues } from "src/components/FilterForm";
@@ -13,8 +12,6 @@ export const ContactListPage = memo(() => {
     (state) => state.contacts.filteredContacts
   );
 
-  const groupContactsList = useAppSelector((state) => state.contacts.groups);
-
   const onSubmit = (fv: Partial<FilterFormValues>) => {
     dispatch(
       contactFilterActionCreator({ name: fv.name, groupId: fv.groupId })
@@ -24,11 +21,7 @@ export const ContactListPage = memo(() => {
   return (
     <Row xxl={1}>
       <Col className="mb-3">
-        <FilterForm
-          groupContactsList={groupContactsList}
-          initialValues={{}}
-          onSubmit={onSubmit}
-        />
+        <FilterForm initialValues={{}} onSubmit={onSubmit} />
       </Col>
       <Col>
         <Row xxl={4} className="g-4">
