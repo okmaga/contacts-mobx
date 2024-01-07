@@ -1,10 +1,14 @@
-import { createStore, combineReducers } from "redux";
-import { contactsReducer } from "./contactsReducer";
+import { combineReducers } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
+import { contactsSlice } from "./contactsReducer";
 
 const rootReducer = combineReducers({
-  contacts: contactsReducer
+  contacts: contactsSlice.reducer
 });
 
-export const store = createStore(rootReducer);
+export const store = configureStore({
+  reducer: rootReducer,
+  devTools: true
+});
 
 export type RootState = ReturnType<typeof rootReducer>;

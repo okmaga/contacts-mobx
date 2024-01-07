@@ -4,7 +4,7 @@ import { ContactCard } from "src/components/ContactCard";
 import { FilterForm, FilterFormValues } from "src/components/FilterForm";
 import { useAppSelector } from "src/redux/hooks";
 import { useAppDispatch } from "src/redux/hooks";
-import { contactFilterActionCreator } from "src/redux/actions";
+import { filterContacts } from "src/redux/contactsReducer";
 
 export const ContactListPage = memo(() => {
   const dispatch = useAppDispatch();
@@ -14,7 +14,7 @@ export const ContactListPage = memo(() => {
 
   const onSubmit = (fv: Partial<FilterFormValues>) => {
     dispatch(
-      contactFilterActionCreator({ name: fv.name, groupId: fv.groupId })
+      filterContacts({ name: fv.name || "", groupId: fv.groupId || "" })
     );
   };
 

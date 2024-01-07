@@ -4,6 +4,9 @@ import { CONTACT_FILTER } from "./actions";
 import { ContactActionTypes } from "./actions";
 import { GroupContactsDto } from "src/types/dto/GroupContactsDto";
 import { FavoriteContactsDto } from "src/types/dto/FavoriteContactsDto";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { FilterFormValues } from "src/components/FilterForm";
+import { log } from "console";
 
 interface ContactsState {
   contacts: ContactDto[];
@@ -16,7 +19,7 @@ interface ContactsState {
   favoriteContacts: FavoriteContactsDto;
 }
 
-const initialState: ContactsState = {
+const initialContacts: ContactsState = {
   contacts: DATA_CONTACT,
   groups: DATA_GROUP_CONTACT,
   filterValues: {
@@ -32,22 +35,23 @@ const initialState: ContactsState = {
   ]
 };
 
-export function contactsReducer(
-  state: ContactsState = initialState,
-  action: ContactActionTypes
-): ContactsState {
-  switch (action.type) {
-    case CONTACT_FILTER:
+export const contactsSlice = createSlice({
+  name: "contacts",
+  initialState: initialContacts,
+  reducers: {
+    filterContacts(state, action: PayloadAction<FilterFormValues>) {
       const { name, groupId } = action.payload;
-
       let filteredContacts = state.contacts;
 
       if (groupId) {
-        const group = state.groups.find((g) => g.id === groupId);
+        const group = state.groups.find(
+          (g) => g.id.toLowerCase() === groupId.toLowerCase()
+        );
         if (group) {
           filteredContacts = filteredContacts.filter((contact) =>
             group.contactIds.includes(contact.id)
           );
+          console.log(filteredContacts);
         } else {
           filteredContacts = groupId === "Select group" ? state.contacts : [];
         }
@@ -55,20 +59,17 @@ export function contactsReducer(
 
       if (name) {
         filteredContacts = filteredContacts.filter((c) =>
-          c.name.includes(name)
+          c.name.toLowerCase().includes(name.toLowerCase())
         );
       }
-
-      return {
-        ...state,
-        filterValues: {
-          name: name || "",
-          groupId: groupId || ""
-        },
-        filteredContacts: filteredContacts
+      state.filterValues = {
+        name: name || "",
+        groupId: groupId || ""
       };
-
-    default:
-      return state;
+      state.filteredContacts = filteredContacts;
+      console.log(groupId);
+    }
   }
-}
+});
+
+export const { filterContacts } = contactsSlice.actions;
