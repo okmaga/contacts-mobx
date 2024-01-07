@@ -1,4 +1,4 @@
-import { ContactDto } from "./../types/dto/ContactDto";
+import { ContactDto } from "../types/dto/ContactDto";
 import { DATA_CONTACT, DATA_GROUP_CONTACT } from "src/__data__";
 import { GroupContactsDto } from "src/types/dto/GroupContactsDto";
 import { FavoriteContactsDto } from "src/types/dto/FavoriteContactsDto";
