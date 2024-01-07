@@ -1,12 +1,9 @@
 import { ContactDto } from "./../types/dto/ContactDto";
 import { DATA_CONTACT, DATA_GROUP_CONTACT } from "src/__data__";
-import { CONTACT_FILTER } from "./actions";
-import { ContactActionTypes } from "./actions";
 import { GroupContactsDto } from "src/types/dto/GroupContactsDto";
 import { FavoriteContactsDto } from "src/types/dto/FavoriteContactsDto";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { FilterFormValues } from "src/components/FilterForm";
-import { log } from "console";
 
 interface ContactsState {
   contacts: ContactDto[];
