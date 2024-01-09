@@ -1,17 +1,18 @@
 import { memo } from "react";
 import { Col, Row } from "react-bootstrap";
 import { GroupContactsCard } from "src/components/GroupContactsCard";
-import { useAppSelector } from "src/redux/hooks";
+import { useGetContactGroupsQuery } from "src/redux/contactsReducer";
 
 export const GroupListPage = memo(() => {
-  const groups = useAppSelector((state) => state.contacts.groups);
+  const { data: groups } = useGetContactGroupsQuery();
   return (
     <Row xxl={4}>
-      {groups.map((group) => (
-        <Col key={group.id}>
-          <GroupContactsCard group={group} withLink />
-        </Col>
-      ))}
+      {groups &&
+        groups.map((group) => (
+          <Col key={group.id}>
+            <GroupContactsCard group={group} withLink />
+          </Col>
+        ))}
     </Row>
   );
 });

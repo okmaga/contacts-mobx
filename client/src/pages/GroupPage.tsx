@@ -4,19 +4,23 @@ import { useParams } from "react-router-dom";
 import { GroupContactsCard } from "src/components/GroupContactsCard";
 import { Empty } from "src/components/Empty";
 import { ContactCard } from "src/components/ContactCard";
-import { useAppSelector } from "src/redux/hooks";
+import {
+  useGetContactGroupsQuery,
+  useGetContactsQuery
+} from "src/redux/contactsReducer";
 
 export const GroupPage = memo(() => {
   const { groupId } = useParams<{ groupId: string }>();
-  const group = useAppSelector((state) =>
-    state.contacts.groups.find((g) => g.id === groupId)
-  );
+  const { data: groups } = useGetContactGroupsQuery();
+  const { data: contacts } = useGetContactsQuery();
 
-  const groupMembers = useAppSelector((state) =>
-    state.contacts.contacts.filter((c) => {
+  const group = groups?.find((g) => g.id === groupId);
+
+  const groupMembers =
+    contacts &&
+    contacts.filter((c) => {
       return group?.contactIds.includes(c.id);
-    })
-  );
+    });
 
   return (
     <Row className="g-4">
@@ -31,11 +35,12 @@ export const GroupPage = memo(() => {
           </Col>
           <Col>
             <Row xxl={4} className="g-4">
-              {groupMembers.map((contact) => (
-                <Col key={contact.id}>
-                  <ContactCard contact={contact} withLink />
-                </Col>
-              ))}
+              {groupMembers &&
+                groupMembers.map((contact) => (
+                  <Col key={contact.id}>
+                    <ContactCard contact={contact} withLink />
+                  </Col>
+                ))}
             </Row>
           </Col>
         </>
